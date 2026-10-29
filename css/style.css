@@ -144,7 +144,6 @@ dt{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ac
 
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s,transform .9s}.reveal.in{opacity:1;transform:none}
 @media(min-width:700px){.polaroid.reveal.in.p1{transform:rotate(-3deg)}.polaroid.reveal.in.p2{transform:translateY(24px) rotate(2deg)}.polaroid.reveal.in.p3{transform:rotate(-1.5deg)}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1}#petals{display:none}}
 
 /* ===== v3: animated name, photo effects, mobile hero, social ===== */
 .script{background:none;color:inherit;animation:none;-webkit-background-clip:border-box;background-clip:border-box;padding:0}
@@ -270,3 +269,28 @@ h1{align-items:center}
  .hero-social{margin-top:1.1rem}
  .hero-art{margin-top:.6rem}
 }
+
+
+/* ===== v6: smoothness (same effects, cheaper to draw) + user motion toggle ===== */
+/* gradients instead of 90px blur filters on huge animated layers */
+.bg i{filter:none!important;opacity:.55;will-change:transform}
+.bg i:nth-child(1){background:radial-gradient(circle,var(--rose) 0,transparent 68%)}
+.bg i:nth-child(2){background:radial-gradient(circle,var(--lav) 0,transparent 68%)}
+.bg i:nth-child(3){background:radial-gradient(circle,var(--rose) 0,transparent 68%);opacity:.3}
+[data-theme=dark] .bg i{opacity:.3}
+/* lighter glass: blur only where it matters */
+.glass{-webkit-backdrop-filter:blur(10px) saturate(125%);backdrop-filter:blur(10px) saturate(125%)}
+.chip,.to-top,.polaroid,.frame-a,.frame-b{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.chip,.to-top{background:rgba(255,255,255,.72)}
+[data-theme=dark] .chip,[data-theme=dark] .to-top{background:rgba(58,42,71,.85)}
+.petal,.track,.frame-a,.frame-b,.polaroid,.frame,.photo img{will-change:transform}
+.frame-a,.frame-b,.polaroid,.frame{will-change:translate}
+.swoosh path{will-change:stroke-dashoffset}
+/* pause infinite animations for sections that are off-screen (JS toggles .off) */
+.off,.off *,.off *::before,.off *::after{animation-play-state:paused!important}
+/* motion off (user choice via footer button) */
+[data-motion=off] *,[data-motion=off] *::before,[data-motion=off] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+[data-motion=off] .reveal{opacity:1!important;transform:none!important}
+[data-motion=off] .swoosh path{stroke-dashoffset:0}
+[data-motion=off] #petals{display:none}
+.motion-btn{font:inherit;font-size:.8rem;color:var(--accent);background:var(--glass);border:1px solid var(--edge);border-radius:999px;padding:.3rem .9rem;cursor:pointer}
