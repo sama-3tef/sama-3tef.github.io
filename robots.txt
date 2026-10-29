@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sama-3tef.github.io/sitemap.xml
